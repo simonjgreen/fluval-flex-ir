@@ -1,0 +1,76 @@
+esphome:
+  name: fluval-ir-proxy
+  friendly_name: Fluval IR Proxy
+  min_version: 2026.11.0
+
+esp32:
+  board: m5stack-atom
+  framework:
+    type: esp-idf
+
+logger:
+
+wifi:
+  # Supply the Wi-Fi credentials over USB using Improv Serial.
+  reboot_timeout: 0s
+
+improv_serial:
+
+api:
+  encryption:
+    key: !secret fluval_api_key
+  actions:
+    - action: send_pronto
+      variables:
+        code: string
+      then:
+        - remote_transmitter.transmit_pronto:
+            transmitter_id: unit_tx
+            data: !lambda 'return code;'
+    - action: send_pronto_onboard
+      variables:
+        code: string
+      then:
+        - remote_transmitter.transmit_pronto:
+            transmitter_id: onboard_tx
+            data: !lambda 'return code;'
+
+ota:
+  - platform: esphome
+    encryption:
+
+# U002 via a Grove-to-DuPont cable and the rear header:
+# black to GND, red to 3V3, yellow (IR_TX) to G23, white (IR_RX) to G33.
+# The U002 pulls IR_RX up to its own supply voltage.
+remote_receiver:
+  id: unit_rx
+  pin:
+    number: GPIO33
+    inverted: true
+    mode: INPUT_PULLUP
+  dump: pronto
+  idle: 15ms
+  filter: 50us
+  buffer_size: 8kb
+
+remote_transmitter:
+  - id: unit_tx
+    pin: GPIO23
+    carrier_duty_percent: 33%
+    non_blocking: true
+  - id: onboard_tx
+    pin: GPIO12  # Factory-wired IR LED on the ATOM Lite.
+    carrier_duty_percent: 33%
+    non_blocking: true
+
+infrared:
+  - platform: ir_rf_proxy
+    name: Mini IR Receiver
+    remote_receiver_id: unit_rx
+    receiver_frequency: 38kHz
+  - platform: ir_rf_proxy
+    name: Mini IR Emitter
+    remote_transmitter_id: unit_tx
+  - platform: ir_rf_proxy
+    name: ATOM IR Emitter
+    remote_transmitter_id: onboard_tx

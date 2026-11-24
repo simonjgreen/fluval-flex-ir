@@ -1,0 +1,54 @@
+{
+  "title": "Fluval Flex IR",
+  "config": {
+    "step": {
+      "user": {
+        "title": "Set up your Fluval Flex light",
+        "description": "Choose the infrared emitter facing the aquarium's receiver.",
+        "data": {"name": "Aquarium name", "emitter": "Infrared emitter"}
+      },
+      "reconfigure": {
+        "title": "Reconfigure your Fluval Flex light",
+        "description": "Choose the infrared emitter facing the aquarium's receiver.",
+        "data": {"name": "Aquarium name", "emitter": "Infrared emitter"}
+      }
+    },
+    "error": {
+      "empty_name": "Enter a name for this aquarium.",
+      "invalid_emitter": "Choose an infrared emitter from the list."
+    },
+    "abort": {
+      "already_configured": "An aquarium with this name and emitter is already configured.",
+      "no_emitters": "Add an infrared emitter to Home Assistant before setting up your aquarium.",
+      "reconfigure_successful": "Aquarium settings updated."
+    }
+  },
+  "entity": {
+    "button": {
+      "rgb_brighter": {"name": "RGB brightness up"},
+      "rgb_dimmer": {"name": "RGB brightness down"},
+      "rgb_power": {"name": "Toggle RGB"},
+      "white_power": {"name": "Toggle white"},
+      "red": {"name": "Red"},
+      "green": {"name": "Green"},
+      "blue": {"name": "Blue"},
+      "white_brighter": {"name": "White brightness up"},
+      "color_r3c1": {"name": "Coral red"},
+      "color_r3c2": {"name": "Light green"},
+      "color_r3c3": {"name": "Medium blue"},
+      "white_dimmer": {"name": "White brightness down"},
+      "color_r4c1": {"name": "Red-orange"},
+      "color_r4c2": {"name": "Mint green"},
+      "color_r4c3": {"name": "Indigo"},
+      "moon_cloud": {"name": "Moon/cloud"},
+      "color_r5c1": {"name": "Orange"},
+      "color_r5c2": {"name": "Turquoise"},
+      "color_r5c3": {"name": "Purple"},
+      "storm": {"name": "Storm"},
+      "color_r6c1": {"name": "Yellow"},
+      "color_r6c2": {"name": "Deep teal"},
+      "color_r6c3": {"name": "Pink"},
+      "color_cycle": {"name": "Colour cycle"}
+    }
+  }
+}
